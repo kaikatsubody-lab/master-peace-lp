@@ -34,6 +34,10 @@
                         midnight: {
                             800: '#1e1b4b',
                             900: '#0f172a',
+                        },
+                        winered: {
+                            500: '#9B111E',
+                            600: '#720e17',
                         }
                     },
                     fontFamily: {
@@ -41,12 +45,11 @@
                         sans: ['"Noto Sans JP"', 'sans-serif'],
                     },
                     backgroundImage: {
-                        'hero-pattern': "linear-gradient(to bottom, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1464802686167-b939a6910659?q=80&w=2050&auto=format&fit=crop')", // Space/Dawn placeholder
-                        'paper-texture': "url('https://www.transparenttextures.com/patterns/cream-paper.png')",
+                        'hero-pattern': "linear-gradient(to bottom, rgba(15, 23, 42, 0.6), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1464802686167-b939a6910659?q=80&w=2050&auto=format&fit=crop')",
                     },
                     animation: {
-                        'spin-slow': 'spin 60s linear infinite',
                         'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         float: {
@@ -64,13 +67,10 @@
         body {
             font-feature-settings: "palt";
             letter-spacing: 0.05em;
+            word-wrap: break-word; /* スマホでの文字はみ出し防止 */
+            -webkit-text-size-adjust: 100%; /* iOSでのフォントサイズ自動調整防止 */
         }
         
-        .vertical-text {
-            writing-mode: vertical-rl;
-            text-orientation: upright;
-        }
-
         .fade-in-section {
             opacity: 0;
             transform: translateY(20px);
@@ -82,32 +82,21 @@
             opacity: 1;
             transform: none;
         }
-
-        /* Gradient Text */
-        .text-gradient-gold {
-            background: linear-gradient(to right, #D4AF37, #F0DEAA, #AA8C2C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans antialiased">
+<body class="bg-slate-50 text-slate-800 font-sans antialiased overflow-x-hidden">
 
     <!-- Header Section -->
     <header class="relative min-h-screen flex flex-col justify-center items-center text-center px-4 overflow-hidden bg-midnight-900 bg-hero-pattern bg-cover bg-center bg-fixed bg-no-repeat">
         
-        <!-- Decoration -->
         <div class="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-black/50 to-transparent"></div>
         <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-slate-50 to-transparent"></div>
 
         <div class="relative z-10 max-w-4xl w-full py-20 fade-in-section">
             <!-- Header Icon (SVG) -->
-            <div class="mb-12 flex justify-center">
-                <div class="w-64 h-64 md:w-80 md:h-80 relative flex items-center justify-center animate-float">
-                     <!-- Background Glow -->
+            <div class="mb-8 md:mb-12 flex justify-center">
+                <div class="w-48 h-48 md:w-80 md:h-80 relative flex items-center justify-center animate-float">
                      <div class="absolute inset-0 bg-gold-500/20 blur-3xl rounded-full"></div>
-                     
-                     <!-- Header SVG Graphic -->
                      <svg viewBox="0 0 400 400" class="w-full h-full drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]">
                         <defs>
                             <linearGradient id="headerGradGold" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -116,18 +105,13 @@
                                 <stop offset="100%" style="stop-color:#AA8C2C;stop-opacity:1" />
                             </linearGradient>
                         </defs>
-                        <!-- Orbital Rings -->
                         <circle cx="200" cy="200" r="180" fill="none" stroke="url(#headerGradGold)" stroke-width="1" stroke-opacity="0.3" />
                         <circle cx="200" cy="200" r="160" fill="none" stroke="url(#headerGradGold)" stroke-width="1" stroke-opacity="0.5" stroke-dasharray="10 5" />
-                        
-                        <!-- Five Elements Nodes (Simplified) -->
-                        <circle cx="200" cy="40" r="10" fill="#2563EB" opacity="0.8" /> <!-- Blue -->
-                        <circle cx="352" cy="150" r="10" fill="#DC2626" opacity="0.8" /> <!-- Red -->
-                        <circle cx="295" cy="323" r="10" fill="#EAB308" opacity="0.8" /> <!-- Yellow -->
-                        <circle cx="105" cy="323" r="10" fill="#E2E8F0" opacity="0.8" /> <!-- White -->
-                        <circle cx="48" cy="150" r="10" fill="#16A34A" opacity="0.8" /> <!-- Green -->
-
-                        <!-- Center Title -->
+                        <circle cx="200" cy="40" r="10" fill="#2563EB" opacity="0.8" />
+                        <circle cx="352" cy="150" r="10" fill="#DC2626" opacity="0.8" />
+                        <circle cx="295" cy="323" r="10" fill="#EAB308" opacity="0.8" />
+                        <circle cx="105" cy="323" r="10" fill="#E2E8F0" opacity="0.8" />
+                        <circle cx="48" cy="150" r="10" fill="#16A34A" opacity="0.8" />
                         <circle cx="200" cy="200" r="90" fill="url(#headerGradGold)" stroke="#fff" stroke-width="2" />
                         <text x="200" y="185" font-family="serif" font-size="24" fill="#1e1b4b" text-anchor="middle" font-weight="bold">The</text>
                         <text x="200" y="215" font-family="serif" font-size="28" fill="#1e1b4b" text-anchor="middle" font-weight="bold">Master</text>
@@ -137,97 +121,163 @@
             </div>
 
             <!-- Catchphrase -->
-            <div class="mb-10 text-white font-serif tracking-widest leading-loose">
-                <p class="text-lg md:text-xl mb-6 opacity-90">これまで、講座やプログラム等<br class="md:hidden">ご参加頂いた皆様へ</p>
-                <h1 class="text-2xl md:text-4xl lg:text-5xl font-bold leading-relaxed">
-                    もう「テイカー＆マギー」は卒業です。<br>
-                    これからは、共に<br>
-                    <span class="text-gold-400 text-3xl md:text-5xl lg:text-6xl inline-block my-2">「Master Peace」</span><br>
-                    の循環を創り出す同志として、<br>
-                    新しいステージにご一緒しませんか！？
+            <div class="mb-10 text-white font-serif tracking-widest leading-loose px-2">
+                <!-- フォントサイズを全体的に縮小調整 -->
+                <h1 class="text-base sm:text-lg md:text-2xl lg:text-3xl font-bold leading-relaxed">
+                    もう「教わる側<span class="text-xs sm:text-sm md:text-lg ml-1">（生徒）</span>」は卒業です。<br><br class="hidden md:block">
+                    これからは、あなたの輝きが<br class="md:hidden">「世界の生成発展」へと繋がる<br>
+                    壮大な循環を、共に創り出していく<br>
+                    <span class="text-gold-400 text-2xl sm:text-3xl md:text-5xl inline-block my-4">「仲間」</span>として。<br><br class="hidden md:block">
+                    これは、新しいステージへの<br class="md:hidden">「特別な案内状」です。
                 </h1>
             </div>
 
-            <!-- Title Logo Area -->
-            <div class="mt-8 border-t border-b border-gold-500/50 py-6 inline-block px-10 bg-black/30 backdrop-blur-md">
-                <h2 class="text-xl md:text-3xl font-serif text-gold-200 uppercase tracking-[0.2em]">
+            <div class="mt-4 md:mt-8 border-t border-b border-gold-500/50 py-4 md:py-6 inline-block px-6 md:px-10 bg-black/30 backdrop-blur-md">
+                <h2 class="text-base md:text-2xl font-serif text-gold-200 uppercase tracking-[0.2em]">
                     The Master Peace Project
                 </h2>
-                <p class="text-sm md:text-base text-gold-100 mt-2 font-serif">ご案内</p>
+                <p class="text-xs md:text-sm text-gold-100 mt-2 font-serif">ご案内</p>
             </div>
         </div>
     </header>
 
     <!-- Introduction Section -->
-    <section class="py-20 md:py-32 px-6 bg-slate-50 relative">
+    <section class="py-20 md:py-32 px-4 md:px-6 bg-slate-50 relative">
         <div class="max-w-3xl mx-auto text-center font-serif fade-in-section">
-            <h3 class="text-2xl md:text-3xl font-bold mb-10 text-midnight-900 leading-normal">
-                これまで講座やプログラムへ<br>ご参加頂き、有難うございました。
+            <h3 class="text-xl md:text-3xl font-bold mb-10 md:mb-12 text-midnight-900 leading-normal">
+                「∞Spiral Program」完走<span class="text-base md:text-lg">(12月末迄)</span>、<br>
+                本当におめでとうございます！<br>
+                そして、お疲れ様でした。
             </h3>
             
-            <div class="space-y-8 text-base md:text-lg leading-loose text-slate-700 text-justify md:text-center">
+            <div class="space-y-8 md:space-y-10 text-sm md:text-lg leading-loose text-slate-700 text-justify md:text-center px-2">
                 <p>
-                    自らの内面と深く向き合い、現実を動かす力を手にした皆様の姿は、<br class="hidden md:inline">
-                    私にとって誇りであり、かけがえのない財産です。
+                    この期間、自分自身と深く向き合い、<br class="hidden md:inline">
+                    現実創造のプロセスを共に歩んでこれたこと、<br class="hidden md:inline">
+                    私にとってもかけがえのない時間でした。<br>
+                    皆様それぞれの変化を近くで見させていただけたことに、<br class="hidden md:inline">
+                    心から感謝しています。
                 </p>
                 <p>
-                    皆様はすでに、十分な力を持っています。
+                    プログラムは一つの区切りを迎えますが、<br class="hidden md:inline">
+                    皆様の人生の「スパイラル（上昇気流）」は、<br class="md:hidden">ここからが本番です。
+                </p>
+                <p class="font-bold text-midnight-900">
+                    これまで、正解のない知識の迷宮を彷徨い続けてきた、<br class="hidden md:inline">
+                    孤独な旅はもう終わりです。
                 </p>
                 <p>
-                    ここからは、同じ目線で未来を語り合い、共に成長し、<br class="hidden md:inline">
-                    世界を動かしていく「仲間」として、歩んでいくことができたら。。。<br class="hidden md:inline">
-                    という想いがあります。
+                    ここから始まるのは、<br class="hidden md:inline">
+                    単なるアフターフォローのコミュニティではありません。
                 </p>
                 <p>
-                    そのための新しい場としてスタートするのが<br>
-                    <strong class="text-2xl md:text-3xl text-gold-600 block mt-4 border-b-2 border-gold-400 inline-block pb-1">「The Master Peace Project」</strong><br>
-                    です。
+                    それは、あなたの人生に<br class="hidden md:inline">
+                    「5つの永久機関的循環（希望・情熱・安定・価値・共鳴）」<br class="md:hidden">をインストールし、<br class="hidden md:inline">
+                    あなた自身と世界を、<br class="md:hidden">半永久的に発展させ続けるための、<br class="hidden md:inline">
+                    生きた<strong class="text-gold-600 border-b border-gold-400">「有機的エコシステム（生態系）」</strong>への参加です。
+                </p>
+                <p>
+                    ここには、同じ志を持ち、<br class="hidden md:inline">
+                    互いのエネルギーを増幅させ合いながら、<br class="hidden md:inline">
+                    共に上昇していく最高の「仲間」がいます。
+                </p>
+                <p>
+                    もう、たった一人で歯を食いしばって頑張る必要はありません。
+                </p>
+                <p>
+                    皆様が築き上げた土台をさらに強固にし、<br class="hidden md:inline">
+                    安心して次のステージへ進み続けるための<br class="md:hidden">「帰ってこられる場所（ホーム）」として、<br>
+                    修了生限定の継続サロンをご用意しました。
+                </p>
+                <div class="py-4"></div>
+                <p class="text-lg md:text-2xl font-bold text-gold-600 leading-relaxed border-t border-b border-gold-200 py-8 inline-block">
+                    互いのエネルギーを増幅させ合いながら、<br class="hidden md:inline">
+                    まだ見ぬ自分への可能性を、確固たる希望に変え、<br>
+                    最高に幸せな人生を自らの意志で、<br class="hidden md:inline">
+                    自由に、そして美しく創造し続けていきませんか
                 </p>
             </div>
         </div>
     </section>
 
     <!-- Core Concept Section -->
-    <section class="py-20 px-6 bg-slate-100 relative overflow-hidden">
-        <!-- Background Decor -->
+    <section class="py-20 px-4 md:px-6 bg-slate-100 relative overflow-hidden">
         <div class="absolute -top-20 -right-20 w-96 h-96 bg-gold-200/20 rounded-full blur-3xl"></div>
         <div class="absolute -bottom-20 -left-20 w-96 h-96 bg-blue-200/20 rounded-full blur-3xl"></div>
 
         <div class="max-w-4xl mx-auto relative z-10 fade-in-section">
-            <h3 class="text-center text-2xl md:text-3xl font-serif font-bold text-midnight-900 mb-12">
-                私たちが目指すのは、<br>単なる個人の幸せではありません。
+            <h3 class="text-center text-xl md:text-3xl font-serif font-bold text-midnight-900 mb-12">
+                The Master Peace Project コンセプト
             </h3>
 
-            <div class="bg-white p-8 md:p-12 rounded-2xl shadow-xl border border-gold-100">
-                <p class="text-center mb-8 text-lg font-medium">「The Master Peace Project」とは、<br class="md:hidden">2つの意味を掛け合わせたものです。</p>
+            <div class="bg-white p-6 md:p-12 rounded-2xl shadow-xl border border-gold-100">
+                <p class="text-center mb-10 text-base md:text-lg font-medium">「The Master Peace Project」とは、<br class="md:hidden">2つの意味を掛け合わせたものです。</p>
                 
-                <div class="grid md:grid-cols-2 gap-8 mb-10">
-                    <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-gold-500">
+                <!-- 2つの意味 -->
+                <div class="grid md:grid-cols-2 gap-6 md:gap-8 mb-12">
+                    <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-gold-500 flex flex-col justify-center">
                         <span class="text-gold-600 font-bold text-xl block mb-2">01</span>
-                        <p class="font-serif text-lg">世界平和は、一人ひとりの内なる平和から始まる <br><span class="text-xl font-bold">"Master Peace"</span></p>
+                        <p class="font-serif text-base md:text-lg leading-relaxed">世界の生成発展は、<br>一人ひとりの内なる平和から始まる<br><span class="text-lg md:text-xl font-bold text-midnight-900">"Master Peace"</span></p>
                     </div>
-                    <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-gold-500">
+                    <div class="bg-slate-50 p-6 rounded-lg border-l-4 border-gold-500 flex flex-col justify-center">
                         <span class="text-gold-600 font-bold text-xl block mb-2">02</span>
-                        <p class="font-serif text-lg">人生を<br><span class="text-xl font-bold">"Master Piece"</span><br>（最高傑作）にする</p>
+                        <p class="font-serif text-base md:text-lg leading-relaxed">人生を<br><span class="text-lg md:text-xl font-bold text-midnight-900">"Master Piece"</span><br>（唯一無二の芸術作品）にする</p>
                     </div>
                 </div>
 
-                <div class="text-center leading-loose text-slate-700 space-y-6">
+                <!-- Earth = Art 解説セクション -->
+                <div class="bg-gold-50/50 rounded-xl p-6 md:p-8 mb-10 text-center border border-gold-100">
+                    <h4 class="font-serif text-lg md:text-xl font-bold text-gold-700 mb-6">なぜ、人生は芸術なのでしょうか？</h4>
+                    <p class="text-slate-700 mb-6 text-sm md:text-base">地球を表す「Earth」という言葉の中には、<br class="md:hidden">「Art（芸術）」が含まれています。</p>
+                    
+                    <!-- E art h Visual (Mobile Optimized) -->
+                    <div class="text-2xl md:text-5xl font-serif font-bold text-midnight-900 mb-6 tracking-widest flex flex-wrap justify-center items-center gap-2">
+                        <span class="text-slate-400">E</span>
+                        <span class="text-gold-600 border-b-2 border-gold-500">art</span>
+                        <span class="text-slate-400">h</span>
+                        <span class="text-slate-400 mx-1">＝</span>
+                        <span>Earth</span>
+                    </div>
+
+                    <div class="text-sm md:text-base text-slate-600 space-y-4 mb-8">
+                        <p>Art（芸術）を中心として、</p>
+                        <div class="flex flex-col md:flex-row justify-center gap-2 md:gap-8 font-bold">
+                            <p>「E」は Eden<span class="font-normal">（エデン＝人間界・楽園）</span></p>
+                            <p>「H」は Heaven<span class="font-normal">（ヘブン＝天国）</span></p>
+                        </div>
+                        <p class="leading-relaxed pt-2">
+                            つまり、天国と人間界を繋ぐものこそが芸術であり、<br>
+                            この地球（Earth）自体が、壮大な芸術作品なのです。
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gold-200">
+                        <p class="text-slate-700 leading-relaxed text-sm md:text-base">
+                            だからこそ、私たちも自らの人生を、<br>
+                            <strong class="text-lg md:text-xl text-gold-600 block my-3">「真っ白なキャンバスに自由に描いていく」</strong>
+                            ように、創造的に生きていくことができるのです。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 結び -->
+                <div class="text-center leading-loose text-slate-700 space-y-6 font-medium text-sm md:text-base">
                     <p>
                         一人ひとりが自らの内側で「真の平和(Master Peace)」を確立することで、<br class="hidden md:inline">
-                        それぞれの人生を「最高傑作(Master Piece)」として輝かせる。
+                        それぞれの人生を「唯一無二の芸術作品(Master Piece)」として輝かせる。
                     </p>
                     <p>
-                        その光の連鎖によって、「世界の生成発展、世界平和」へと繋がっていくプロジェクトです。<br>
+                        その光の連鎖によって、「世界の生成発展」へと繋がっていくプロジェクトです。
+                    </p>
+                    <p class="pt-4 border-t border-slate-100">
                         個人の幸せが循環し、やがて世界全体の生成発展へと繋がる。<br>
                         この壮大な循環を、皆様と共に創り上げていきたいのです。
                     </p>
                 </div>
             </div>
 
-            <!-- Emphasis Box -->
             <div class="mt-12 text-center fade-in-section delay-200">
-                <div class="inline-block bg-gradient-to-r from-gold-600 to-gold-400 text-white font-serif text-xl md:text-2xl px-8 py-4 rounded-full shadow-lg transform hover:scale-105 transition duration-300">
+                <div class="inline-block bg-gradient-to-r from-gold-600 to-gold-400 text-white font-serif text-lg md:text-2xl px-6 md:px-8 py-3 md:py-4 rounded-full shadow-lg transform hover:scale-105 transition duration-300">
                     あなたが整い、満たされることは、世界への貢献です！
                 </div>
             </div>
@@ -237,16 +287,14 @@
     <!-- The Master Peace Cycle Section -->
     <section class="py-20 px-4 bg-white">
         <div class="max-w-6xl mx-auto fade-in-section">
-            <h3 class="text-center text-3xl md:text-4xl font-serif font-bold text-gold-600 mb-4">The Master Peace Cycle</h3>
-            <p class="text-center text-slate-600 mb-12">この5つの循環を回し続けることで、「Master Peace」へと繋がります。</p>
+            <h3 class="text-center text-2xl md:text-4xl font-serif font-bold text-gold-600 mb-4">The Master Peace Cycle</h3>
+            <p class="text-center text-slate-600 mb-12 text-sm md:text-base">この5つの循環を回し続けることで、「Master Peace」へと繋がります。</p>
 
             <div class="flex flex-col items-center justify-center gap-10">
-                <!-- SVG Diagram Replacement for Image_9.png -->
-                <!-- Mobile: Stacked view is handled by responsive text below, but we show the graphic on all screens -->
+                <!-- SVG Diagram -->
                 <div class="w-full max-w-2xl aspect-square relative">
                     <svg viewBox="0 0 800 800" class="w-full h-full filter drop-shadow-xl">
                         <defs>
-                            <!-- Gradients based on screenshot -->
                             <linearGradient id="gradBlue" x1="0%" y1="0%" x2="0%" y2="100%">
                                 <stop offset="0%" style="stop-color:#2563EB" />
                                 <stop offset="100%" style="stop-color:#1D4ED8" />
@@ -272,26 +320,22 @@
                                 <stop offset="70%" style="stop-color:#D4AF37" />
                                 <stop offset="100%" style="stop-color:#AA8C2C" />
                             </radialGradient>
-                            <!-- Arrow Marker -->
                             <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
                                 <polygon points="0 0, 10 3.5, 0 7" fill="#64748B" opacity="0.6"/>
                             </marker>
                         </defs>
 
-                        <!-- Connecting Arrows (Simplified Arcs) -->
                         <path d="M400 130 A 270 270 0 0 1 650 310" fill="none" stroke="url(#gradBlue)" stroke-width="4" marker-end="url(#arrowhead)" opacity="0.5"/>
                         <path d="M650 310 A 270 270 0 0 1 550 600" fill="none" stroke="url(#gradRed)" stroke-width="4" marker-end="url(#arrowhead)" opacity="0.5"/>
                         <path d="M550 600 A 270 270 0 0 1 250 600" fill="none" stroke="url(#gradYellow)" stroke-width="4" marker-end="url(#arrowhead)" opacity="0.5"/>
                         <path d="M250 600 A 270 270 0 0 1 150 310" fill="none" stroke="url(#gradWhite)" stroke-width="4" marker-end="url(#arrowhead)" opacity="0.5"/>
                         <path d="M150 310 A 270 270 0 0 1 400 130" fill="none" stroke="url(#gradGreen)" stroke-width="4" marker-end="url(#arrowhead)" opacity="0.5"/>
 
-                        <!-- Center Circle -->
                         <circle cx="400" cy="400" r="110" fill="url(#gradCenter)" stroke="#fff" stroke-width="4" />
                         <text x="400" y="380" font-family="serif" font-size="32" fill="#1e1b4b" text-anchor="middle" font-weight="bold">The</text>
                         <text x="400" y="420" font-family="serif" font-size="36" fill="#1e1b4b" text-anchor="middle" font-weight="bold">Master</text>
                         <text x="400" y="460" font-family="serif" font-size="36" fill="#1e1b4b" text-anchor="middle" font-weight="bold">Peace</text>
 
-                        <!-- Top: Blue (Hope) -->
                         <g transform="translate(400, 120)">
                             <circle cx="0" cy="0" r="90" fill="url(#gradBlue)" stroke="#fff" stroke-width="3" />
                             <text x="0" y="-15" font-family="sans-serif" font-size="18" fill="white" text-anchor="middle" font-weight="bold">諦めを</text>
@@ -299,7 +343,6 @@
                             <text x="0" y="40" font-family="sans-serif" font-size="18" fill="white" text-anchor="middle" font-weight="bold">変える。</text>
                         </g>
 
-                        <!-- Right: Red (Passion) -->
                         <g transform="translate(670, 310)">
                             <circle cx="0" cy="0" r="90" fill="url(#gradRed)" stroke="#fff" stroke-width="3" />
                             <text x="0" y="-20" font-family="sans-serif" font-size="16" fill="white" text-anchor="middle" font-weight="bold">最高に</text>
@@ -308,7 +351,6 @@
                             <text x="0" y="55" font-family="sans-serif" font-size="18" fill="white" text-anchor="middle" font-weight="bold">する。</text>
                         </g>
 
-                        <!-- Bottom Right: Yellow (Stability) -->
                         <g transform="translate(560, 620)">
                             <circle cx="0" cy="0" r="90" fill="url(#gradYellow)" stroke="#fff" stroke-width="3" />
                             <text x="0" y="-25" font-family="sans-serif" font-size="18" fill="#1e1b4b" text-anchor="middle" font-weight="bold">すべてを</text>
@@ -317,7 +359,6 @@
                             <text x="0" y="45" font-family="sans-serif" font-size="18" fill="#1e1b4b" text-anchor="middle" font-weight="bold">拡大する。</text>
                         </g>
 
-                        <!-- Bottom Left: White/Silver (Value) -->
                         <g transform="translate(240, 620)">
                             <circle cx="0" cy="0" r="90" fill="url(#gradWhite)" stroke="#94a3b8" stroke-width="3" />
                             <text x="0" y="-15" font-family="sans-serif" font-size="18" fill="#1e1b4b" text-anchor="middle" font-weight="bold">一家に一人、</text>
@@ -325,7 +366,6 @@
                             <text x="0" y="40" font-family="sans-serif" font-size="16" fill="#1e1b4b" text-anchor="middle" font-weight="bold">(治療家)」を。</text>
                         </g>
 
-                        <!-- Left: Green (Circulation) -->
                         <g transform="translate(130, 310)">
                             <circle cx="0" cy="0" r="90" fill="url(#gradGreen)" stroke="#fff" stroke-width="3" />
                             <text x="0" y="-20" font-family="sans-serif" font-size="20" fill="white" text-anchor="middle" font-weight="bold">「個人」の</text>
@@ -336,45 +376,26 @@
                     </svg>
                 </div>
 
-                <!-- Text Content (Semantic Backup) -->
+                <!-- Text Content -->
                 <div class="w-full max-w-4xl grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="bg-blue-50 border-l-4 border-blue-600 p-4 rounded shadow-sm">
-                        <div class="flex items-center mb-2">
-                            <i class="fas fa-tree text-blue-600 mr-2"></i>
-                            <h4 class="font-bold text-slate-800">【希望】</h4>
-                        </div>
+                        <h4 class="font-bold text-slate-800 mb-1"><i class="fas fa-tree text-blue-600 mr-2"></i>【希望】</h4>
                         <p class="text-sm text-slate-600">諦めを「希望」に変える。</p>
                     </div>
-
                     <div class="bg-red-50 border-l-4 border-red-600 p-4 rounded shadow-sm">
-                         <div class="flex items-center mb-2">
-                            <i class="fas fa-fire text-red-600 mr-2"></i>
-                            <h4 class="font-bold text-slate-800">【情熱】</h4>
-                        </div>
+                        <h4 class="font-bold text-slate-800 mb-1"><i class="fas fa-fire text-red-600 mr-2"></i>【情熱】</h4>
                         <p class="text-sm text-slate-600">最高に幸せな人生を「自ら創造」する。</p>
                     </div>
-
                     <div class="bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded shadow-sm">
-                         <div class="flex items-center mb-2">
-                            <i class="fas fa-mountain text-yellow-600 mr-2"></i>
-                            <h4 class="font-bold text-slate-800">【安定】</h4>
-                        </div>
+                        <h4 class="font-bold text-slate-800 mb-1"><i class="fas fa-mountain text-yellow-600 mr-2"></i>【安定】</h4>
                         <p class="text-sm text-slate-600">すべてを「包み込み」、揺るぎない土台を拡大する。</p>
                     </div>
-
                     <div class="bg-slate-100 border-l-4 border-slate-400 p-4 rounded shadow-sm lg:col-start-1">
-                         <div class="flex items-center mb-2">
-                            <i class="fas fa-gem text-slate-500 mr-2"></i>
-                            <h4 class="font-bold text-slate-800">【価値】</h4>
-                        </div>
+                        <h4 class="font-bold text-slate-800 mb-1"><i class="fas fa-gem text-slate-500 mr-2"></i>【価値】</h4>
                         <p class="text-sm text-slate-600">一家に一人、「セラピスト(治療家)」を。</p>
                     </div>
-                    
                     <div class="bg-green-50 border-l-4 border-green-600 p-4 rounded shadow-sm">
-                         <div class="flex items-center mb-2">
-                            <i class="fas fa-water text-green-600 mr-2"></i>
-                            <h4 class="font-bold text-slate-800">【循環】</h4>
-                        </div>
+                        <h4 class="font-bold text-slate-800 mb-1"><i class="fas fa-water text-green-600 mr-2"></i>【循環】</h4>
                         <p class="text-sm text-slate-600">「個人」の幸せが、世界の幸せへ還る。</p>
                     </div>
                 </div>
@@ -382,36 +403,17 @@
         </div>
     </section>
 
-    <!-- Role of Salon -->
+    <!-- Role of Salon & Promises Section -->
     <section class="py-24 px-6 bg-midnight-900 text-white relative bg-cover bg-center bg-fixed" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('https://images.unsplash.com/photo-1519681393798-3828fb4090bb?q=80&w=2070&auto=format&fit=crop');">
         <div class="max-w-3xl mx-auto text-center font-serif fade-in-section">
             <h3 class="text-2xl md:text-4xl font-bold mb-10 leading-normal text-gold-200">
                 ここは、私たちが目指す世界を共に体現する<br>
                 「実験場」であり「発信基地」です。
             </h3>
-
-            <div class="space-y-8 text-base md:text-lg leading-loose text-slate-200 text-justify md:text-center">
-                <p>
-                    これまで、このような壮大なことを表に出すのは気が引けたり、<br>
-                    一人で自分の中だけで密かに思っていればいい、と考えていました。
-                </p>
-                <p>
-                    ですが、当然この壮大な循環を一人で回し続けるのは、簡単ではありません。<br>
-                    日常の忙しさや感情に流されそうになったり、視座が下がってしまうこともあれば、<br>
-                    まだまだ未熟だと落胆することも多々あります。
-                </p>
-                <p>
-                    だからこそ、同じ志を持つ仲間が集い、<br>
-                    互いにエネルギーを高め合い、基準値を維持するための<br>
-                    <span class="text-2xl md:text-3xl text-gold-400 font-bold block my-4">「基地（ホーム）」</span>
-                    がある事で、より大きく伸ばし高めることができるのではないか！？<br>
-                    という想いから生まれたのが、この <span class="text-gold-300">”Master Peace Salon”</span> です。
-                </p>
-                <p class="text-xl md:text-2xl mt-8 pt-8 border-t border-slate-700">
-                    この制限のない「遊び場」のような世界で<br>
-                    「最高に幸せな自分」として一緒に進みませんか？
-                </p>
-            </div>
+            <p class="text-xl md:text-2xl mt-8 pt-8 border-t border-slate-700 leading-relaxed">
+                この制限のない「遊び場」のような世界で<br>
+                「最高に幸せな自分」として一緒に進みませんか？
+            </p>
         </div>
     </section>
 
@@ -419,37 +421,30 @@
     <section class="py-20 px-4 bg-slate-50">
         <div class="max-w-6xl mx-auto fade-in-section">
             <div class="text-center mb-16">
-                <h3 class="text-3xl font-serif font-bold text-midnight-900 mb-4">サロンメンバーへの4つの約束</h3>
-                <p class="text-slate-600">ご参加頂く皆様には、共に上昇気流に乗っていける環境を約束します。</p>
+                <h3 class="text-2xl md:text-3xl font-serif font-bold text-midnight-900 mb-4">サロンメンバーへの4つの約束</h3>
+                <p class="text-slate-600 text-sm md:text-base">ご参加頂く皆様には、共に上昇気流に乗っていける環境を約束します。</p>
             </div>
-
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Promise 1 -->
-                <div class="bg-white p-6 rounded-xl shadow-md border-b-4 border-gold-400 hover:shadow-xl transition duration-300">
+                <!-- Cards (1-4) -->
+                <div class="bg-white p-6 rounded-xl shadow-md border-b-4 border-gold-400">
                     <div class="text-gold-500 text-4xl mb-4 text-center"><i class="fas fa-eye"></i></div>
                     <h4 class="text-lg font-bold text-center mb-3">1. 視座の維持と向上</h4>
-                    <p class="text-sm text-slate-600 leading-relaxed">定期的なグループセッションや交流で、常に高いエネルギーに触れ続けられます。</p>
+                    <p class="text-sm text-slate-600">定期的なグループセッションや交流で、常に高いエネルギーに触れ続けられます。</p>
                 </div>
-                
-                <!-- Promise 2 -->
-                <div class="bg-white p-6 rounded-xl shadow-md border-b-4 border-gold-400 hover:shadow-xl transition duration-300">
+                <div class="bg-white p-6 rounded-xl shadow-md border-b-4 border-gold-400">
                     <div class="text-gold-500 text-4xl mb-4 text-center"><i class="fas fa-bolt"></i></div>
                     <h4 class="text-lg font-bold text-center mb-3">2. 最先端の共有</h4>
-                    <p class="text-sm text-slate-600 leading-relaxed">私が新たに得た学びや気づきは、コラムやライブ配信で真っ先にシェアします。</p>
+                    <p class="text-sm text-slate-600">私が新たに得た学びや気づきは、コラムやライブ配信で真っ先にシェアします。</p>
                 </div>
-
-                <!-- Promise 3 -->
-                <div class="bg-white p-6 rounded-xl shadow-md border-b-4 border-gold-400 hover:shadow-xl transition duration-300">
+                <div class="bg-white p-6 rounded-xl shadow-md border-b-4 border-gold-400">
                     <div class="text-gold-500 text-4xl mb-4 text-center"><i class="fas fa-chalkboard-user"></i></div>
                     <h4 class="text-lg font-bold text-center mb-3">3. 実践の場の提供</h4>
-                    <p class="text-sm text-slate-600 leading-relaxed">復習会はグループコンサルでの情報共有はもちろん、今後開催される<strong class="text-gold-600">「新講座」にも、メンバーは無料で参加できます。</strong><br><span class="text-xs text-slate-400">(プランによる)</span><br>共に学び、共に実践しましょう。</p>
+                    <p class="text-sm text-slate-600">復習会はグループコンサルでの情報共有はもちろん、今後開催される<strong class="text-gold-600">「新講座」にも、メンバーは無料で参加できます。</strong><br><span class="text-xs text-slate-400">(プランによる)</span></p>
                 </div>
-
-                <!-- Promise 4 -->
-                <div class="bg-white p-6 rounded-xl shadow-md border-b-4 border-gold-400 hover:shadow-xl transition duration-300">
+                <div class="bg-white p-6 rounded-xl shadow-md border-b-4 border-gold-400">
                     <div class="text-gold-500 text-4xl mb-4 text-center"><i class="fas fa-heart"></i></div>
                     <h4 class="text-lg font-bold text-center mb-3">4. 安心のサポート</h4>
-                    <p class="text-sm text-slate-600 leading-relaxed">迷った時は、いつでも帰ってこられる相談場所があります。</p>
+                    <p class="text-sm text-slate-600">迷った時は、いつでも帰ってこられる相談場所があります。</p>
                 </div>
             </div>
         </div>
@@ -459,28 +454,36 @@
     <section class="py-20 px-4 bg-slate-100" id="plans">
         <div class="max-w-5xl mx-auto fade-in-section">
             <div class="text-center mb-12">
-                <h3 class="text-3xl md:text-4xl font-serif font-bold text-midnight-900 mb-4">共に進むための2つの選択肢</h3>
-                <p class="text-red-600 font-bold bg-red-50 inline-block px-4 py-2 rounded-full border border-red-200">
+                <h3 class="text-2xl md:text-4xl font-serif font-bold text-midnight-900 mb-4">共に進むための2つの選択肢</h3>
+                <p class="text-winered-600 font-bold bg-white inline-block px-4 py-2 md:px-6 md:py-3 rounded-full border-2 border-winered-600 shadow-lg text-sm md:text-base">
+                    <i class="fas fa-exclamation-circle mr-2"></i>申込み期限は、12月20日（土）まで
+                </p>
+                <p class="text-slate-600 mt-4 text-xs md:text-sm">
                     ※皆様への特別なご案内として、今回限りの内容と特別価格でご用意しました
                 </p>
             </div>
 
-            <div class="flex flex-col md:flex-row gap-8 items-stretch justify-center">
+            <!-- 月払いプラン（プレミアム & コミュニティ） -->
+            <div class="flex flex-col md:flex-row gap-8 items-stretch justify-center mb-16">
                 
                 <!-- Premium Plan -->
-                <div class="relative w-full md:w-1/2 bg-white rounded-2xl shadow-2xl border-2 border-gold-400 overflow-hidden transform md:-translate-y-4">
-                    <!-- Ribbon -->
-                    <div class="absolute top-0 right-0">
+                <div class="relative w-full md:w-1/2 bg-white rounded-2xl shadow-2xl border-4 border-gold-400 overflow-hidden transform md:-translate-y-4">
+                    <div class="absolute top-0 right-0 z-10">
                         <div class="bg-gold-500 text-white text-xs font-bold px-3 py-1 uppercase tracking-wider rounded-bl-lg">Recommended</div>
                     </div>
                     
                     <div class="bg-gold-50 p-6 text-center border-b border-gold-100">
                         <h4 class="text-2xl font-serif font-bold text-gold-700 mb-2">プランA：<br>プレミアム・プラン</h4>
                         <p class="text-sm text-gold-600 mb-4">〜個別の対話を重ねながら、<br>共に加速していきたい方へ〜</p>
-                        <div class="text-4xl font-bold text-slate-800">16,500<span class="text-base font-normal text-slate-500">円（税込）/月</span></div>
+                        
+                        <div class="flex flex-col items-center">
+                            <div class="text-sm text-slate-400 line-through">通常 22,000円</div>
+                            <div class="text-4xl font-bold text-red-600">16,500<span class="text-base font-normal text-slate-500">円（税込）/月</span></div>
+                            <div class="text-xs text-white bg-red-500 px-2 py-0.5 rounded mt-1">今回限りの特別価格</div>
+                        </div>
                     </div>
 
-                    <div class="p-8">
+                    <div class="p-6 md:p-8">
                         <p class="text-sm text-slate-600 mb-6 leading-relaxed">
                             これまで通りの深い関わりを維持しつつ、進んでいくプランです。
                             月1回の個人セッションで視点を合わせ、無制限のチャットで日々の実践をサポートします。
@@ -490,15 +493,15 @@
                             <h5 class="font-bold text-gold-700 mb-3 text-sm text-center">＜このプランだけの特典＞</h5>
                             <ul class="space-y-3">
                                 <li class="flex items-start text-sm font-bold text-slate-800">
-                                    <i class="fas fa-star text-gold-500 mt-1 mr-2"></i>
+                                    <i class="fas fa-star text-gold-500 mt-1 mr-2 shrink-0"></i>
                                     月1回の個人セッション（zoom）
                                 </li>
                                 <li class="flex items-start text-sm font-bold text-slate-800">
-                                    <i class="fas fa-star text-gold-500 mt-1 mr-2"></i>
+                                    <i class="fas fa-star text-gold-500 mt-1 mr-2 shrink-0"></i>
                                     個別チャット相談無制限（専用チャット）
                                 </li>
-                                <li class="flex items-start text-sm font-bold text-red-600">
-                                    <i class="fas fa-star text-red-500 mt-1 mr-2"></i>
+                                <li class="flex items-start text-sm font-bold text-winered-600">
+                                    <i class="fas fa-star text-winered-500 mt-1 mr-2 shrink-0"></i>
                                     新講座への参加無料（リアル/オンライン）
                                 </li>
                             </ul>
@@ -507,50 +510,49 @@
                         <div class="border-t border-dashed border-slate-200 pt-4">
                             <h5 class="font-bold text-slate-500 mb-3 text-xs text-center">＜共通特典＞</h5>
                             <ul class="space-y-2 text-sm text-slate-600">
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> グループコンサル参加可（月1回以上）</li>
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> 専用グループチャット</li>
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> コラム配信</li>
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> リトリート優先案内</li>
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> 懇親会</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> グループコンサル（zoom 月1回以上）</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> 専用グループチャット</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> コラム配信</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> リトリート優先案内</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> 懇親会</li>
                             </ul>
                         </div>
                     </div>
                     
-                    <div class="px-8 pb-8">
+                    <div class="px-6 pb-8 md:px-8">
                         <a href="#payment-premium" class="block w-full py-4 bg-gradient-to-r from-gold-600 to-gold-400 text-white font-bold text-center rounded-lg shadow-lg hover:shadow-xl hover:scale-[1.02] transition transform duration-200">
                             プレミアム・プランで参加する
                         </a>
-                        <p class="text-center text-xs text-gold-600 mt-2 font-bold">★加速して現実創造したい方へ</p>
                     </div>
                 </div>
 
                 <!-- Community Plan -->
-                <div class="w-full md:w-1/2 bg-white rounded-2xl shadow-lg border border-slate-200">
+                <div class="w-full md:w-1/2 bg-white rounded-2xl shadow-lg border border-slate-200 flex flex-col">
                     <div class="bg-slate-50 p-6 text-center border-b border-slate-200">
                         <h4 class="text-xl font-serif font-bold text-slate-700 mb-2">プランB：<br>コミュニティ・プラン</h4>
                         <p class="text-sm text-slate-500 mb-4">〜仲間との繋がりの中で、<br>共に循環を創り出したい方へ〜</p>
                         <div class="text-3xl font-bold text-slate-700">8,800<span class="text-base font-normal text-slate-500">円（税込）/月</span></div>
                     </div>
 
-                    <div class="p-8">
+                    <div class="p-6 md:p-8 flex-grow">
                         <p class="text-sm text-slate-600 mb-6 leading-relaxed">
                             個別サポートは卒業し、自立的に進んでいくプランです。
-                            グループセッションやコラムなどで基準値を保ちながら、どんどん現実創造を進めていきます。
+                            グループセッションやコラムなどで基準値を保ちながら、どんどん現実創造を進めて頂きます。
                         </p>
 
                         <div class="border-t border-dashed border-slate-200 pt-4">
                             <h5 class="font-bold text-slate-500 mb-3 text-xs text-center">＜共通特典＞</h5>
                             <ul class="space-y-2 text-sm text-slate-600">
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> グループコンサル参加可（月1回以上）</li>
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> 専用グループチャット</li>
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> コラム配信</li>
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> リトリート優先案内</li>
-                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i> 懇親会</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> グループコンサル（zoom 月1回以上）</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> 専用グループチャット（質問＆相談、報告シェア）</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> コラム配信</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> リトリート優先案内</li>
+                                <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2 shrink-0"></i> 懇親会</li>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="px-8 pb-8 mt-auto">
+                    <div class="px-6 pb-8 md:px-8 mt-auto">
                         <a href="#payment-community" class="block w-full py-3 bg-slate-600 text-white font-bold text-center rounded-lg shadow hover:bg-slate-700 transition duration-200">
                             コミュニティ・プランで参加する
                         </a>
@@ -558,16 +560,61 @@
                 </div>
 
             </div>
+
+            <!-- SPECIAL OFFER SECTION -->
+            <div class="relative transform md:-rotate-1 hover:rotate-0 transition duration-300">
+                <div class="absolute inset-0 bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 blur-lg opacity-50"></div>
+                <div class="relative bg-gradient-to-b from-white to-gold-50 border-4 border-gold-500 rounded-2xl p-6 md:p-10 shadow-2xl text-center max-w-3xl mx-auto overflow-hidden">
+                    <!-- Ribbon -->
+                    <div class="absolute top-0 right-0">
+                        <div class="bg-winered-600 text-white text-xs md:text-sm font-bold px-8 py-2 transform rotate-45 translate-x-8 translate-y-4 shadow-md">
+                            Special Offer
+                        </div>
+                    </div>
+
+                    <h4 class="text-lg md:text-3xl font-serif font-bold text-winered-600 mb-4">
+                        <span class="bg-winered-600 text-white px-2 py-1 text-sm md:text-xl rounded mr-2 align-middle">Premium</span>
+                        1年分まとめ払い特典
+                    </h4>
+                    <p class="text-sm md:text-lg text-slate-700 font-bold mb-6">
+                        <i class="far fa-clock mr-1"></i> <span class="underline decoration-wavy decoration-red-400 underline-offset-4">12月10日(水)まで</span>にお申込みの方限定
+                    </p>
+                    
+                    <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-8 mb-6">
+                        <div class="text-slate-400 line-through text-lg md:text-2xl font-bold">
+                            198,000円<span class="text-xs md:text-sm font-normal block md:inline">（16,500円×12ヶ月）</span>
+                        </div>
+                        <div class="hidden md:block text-gold-500 text-3xl"><i class="fas fa-arrow-right"></i></div>
+                        <div class="block md:hidden text-gold-500 text-2xl"><i class="fas fa-arrow-down"></i></div>
+                        <div class="text-winered-600 text-4xl md:text-6xl font-black tracking-tight">
+                            165,000<span class="text-lg md:text-2xl font-bold text-slate-800">円</span>
+                        </div>
+                    </div>
+                    
+                    <div class="inline-block bg-gold-500 text-white font-bold text-base md:text-xl px-6 md:px-8 py-2 rounded-full shadow-lg animate-pulse-slow mb-8">
+                        2ヶ月分無料（33,000円OFF）
+                    </div>
+
+                    <!-- ↓↓↓ 【追加】年払い決済ボタン ↓↓↓ -->
+                    <a href="https://www.paypal.com/ncp/payment/7QHVZLVX8LULS" target="_blank" rel="noopener noreferrer" class="block w-full max-w-lg mx-auto py-4 bg-gradient-to-r from-winered-600 to-red-500 text-white font-bold text-lg md:text-xl rounded-full shadow-lg border-b-4 border-winered-600 relative overflow-hidden group hover:scale-105 transition transform duration-200">
+                        <span class="relative z-10">
+                            ▼ プレミアム 1年まとめ払いで参加する
+                        </span>
+                        <div class="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition duration-500"></div>
+                    </a>
+                </div>
+            </div>
+            <!-- END SPECIAL OFFER -->
         </div>
     </section>
 
     <!-- Comparison Table Section -->
     <section class="py-16 px-4 bg-white">
         <div class="max-w-3xl mx-auto fade-in-section">
-            <h3 class="text-center text-2xl font-serif font-bold mb-8 text-slate-800">プラン比較表</h3>
+            <h3 class="text-center text-xl md:text-2xl font-serif font-bold mb-8 text-slate-800">プラン比較表</h3>
             
-            <div class="overflow-hidden rounded-lg border border-slate-200 shadow-sm">
-                <table class="w-full text-sm text-left">
+            <div class="overflow-x-auto rounded-lg border border-slate-200 shadow-sm">
+                <table class="w-full text-sm text-left min-w-[600px] md:min-w-0"> <!-- スマホでの横スクロールを明示 -->
                     <thead class="bg-slate-50 text-slate-700 font-serif">
                         <tr>
                             <th class="px-4 py-3 font-bold w-1/3">内容</th>
@@ -591,10 +638,9 @@
                             <td class="px-4 py-3 text-center text-gold-600 text-lg bg-gold-50/30 border-x border-gold-100">●</td>
                             <td class="px-4 py-3 text-center text-slate-300">-</td>
                         </tr>
-                        <!-- Highlighted Row -->
                         <tr class="bg-red-50">
-                            <td class="px-4 py-3 font-bold text-red-800">新講座参加権<br><span class="text-xs font-normal text-red-600">(リアル/オンライン/動画)</span></td>
-                            <td class="px-4 py-3 text-center font-bold text-red-600 bg-red-100/50 border-x border-red-200">無料</td>
+                            <td class="px-4 py-3 font-bold text-winered-600">新講座参加権<br><span class="text-xs font-normal text-winered-500">(リアル/オンライン)</span></td>
+                            <td class="px-4 py-3 text-center font-bold text-winered-600 bg-red-100/50 border-x border-red-200">無料</td>
                             <td class="px-4 py-3 text-center text-slate-300 border-x border-red-50">-</td>
                         </tr>
                         <tr>
@@ -608,7 +654,7 @@
                             <td class="px-4 py-3 text-center text-slate-600">●</td>
                         </tr>
                         <tr>
-                            <td class="px-4 py-3 font-medium text-slate-600">コラム・ライブ配信</td>
+                            <td class="px-4 py-3 font-medium text-slate-600">コラム配信</td>
                             <td class="px-4 py-3 text-center text-slate-600 bg-gold-50/30 border-x border-gold-100">●</td>
                             <td class="px-4 py-3 text-center text-slate-600">●</td>
                         </tr>
@@ -620,25 +666,129 @@
                     </tbody>
                 </table>
             </div>
+            <p class="text-center text-xs text-slate-400 mt-2 md:hidden">※表は横にスクロールできます</p>
+        </div>
+    </section>
+
+    <!-- Q&A Section -->
+    <section class="py-16 px-4 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-4xl mx-auto fade-in-section">
+            <h3 class="text-center text-xl md:text-2xl font-serif font-bold mb-10 text-midnight-900">よくあるご質問 (Q&A)</h3>
+            
+            <div class="grid gap-6">
+                <!-- Q1 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-base md:text-lg text-slate-800 mb-2 flex items-start">
+                        <span class="bg-gold-500 text-white text-xs px-2 py-1 rounded mr-3 mt-1 shrink-0">Q1</span>
+                        支払い方法は何がありますか？
+                    </h4>
+                    <p class="text-slate-600 text-sm ml-10">
+                        クレジットカード決済（VISA/Master/JCB/Amex/Diners）がご利用いただけます。<br>
+                        銀行振込をご希望の方は、個別にご連絡ください。
+                    </p>
+                </div>
+
+                <!-- Q2 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-base md:text-lg text-slate-800 mb-2 flex items-start">
+                        <span class="bg-gold-500 text-white text-xs px-2 py-1 rounded mr-3 mt-1 shrink-0">Q2</span>
+                        年払いの途中解約はできますか？
+                    </h4>
+                    <p class="text-slate-600 text-sm ml-10">原則として、年払いプランの途中解約および返金は承っておりません。1年間のコミットメントとして、お得な価格設定とさせていただいております。</p>
+                </div>
+
+                <!-- Q3 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-base md:text-lg text-slate-800 mb-2 flex items-start">
+                        <span class="bg-gold-500 text-white text-xs px-2 py-1 rounded mr-3 mt-1 shrink-0">Q3</span>
+                        月額プランの退会やプラン変更は可能ですか？
+                    </h4>
+                    <p class="text-slate-600 text-sm ml-10">はい、可能です。月額プランはいつでもプラン変更・退会が可能ですので、ご自身のタイミングに合わせてご退会、プラン変更いただけます。</p>
+                </div>
+
+                <!-- Q4 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-base md:text-lg text-slate-800 mb-2 flex items-start">
+                        <span class="bg-gold-500 text-white text-xs px-2 py-1 rounded mr-3 mt-1 shrink-0">Q4</span>
+                        リアルタイムで参加できない日があっても大丈夫ですか？
+                    </h4>
+                    <p class="text-slate-600 text-sm ml-10">はい、大丈夫です。グループコンサルや講座はアーカイブ（録画）を残しますので、後から何度でも見返すことができます。</p>
+                </div>
+                
+                <!-- Q5 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-base md:text-lg text-slate-800 mb-2 flex items-start">
+                        <span class="bg-gold-500 text-white text-xs px-2 py-1 rounded mr-3 mt-1 shrink-0">Q5</span>
+                        個人セッションはいつ日程が決まりますか？
+                    </h4>
+                    <p class="text-slate-600 text-sm ml-10">毎月セッション可能日を表示しますので、そこからご都合の合う日と時間を選んで、予約してください。</p>
+                </div>
+
+                <!-- Q6 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-base md:text-lg text-slate-800 mb-2 flex items-start">
+                        <span class="bg-gold-500 text-white text-xs px-2 py-1 rounded mr-3 mt-1 shrink-0">Q6</span>
+                        グループコンサル、講座は日程は決まっていますか？
+                    </h4>
+                    <p class="text-slate-600 text-sm ml-10 leading-relaxed">
+                        グループコンサル、講座共に、月末までに翌月の日程をご案内します。（1回分）<br><br>
+                        グループコンサルについては、同月に2回目以上を開催する場合は急遽になる可能性が高いですが、アーカイブは配信しますので、参加できない場合はそちらで内容を確認していただくことが可能です。
+                    </p>
+                </div>
+
+                <!-- Q7 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-base md:text-lg text-slate-800 mb-2 flex items-start">
+                        <span class="bg-gold-500 text-white text-xs px-2 py-1 rounded mr-3 mt-1 shrink-0">Q7</span>
+                        なぜ、講座ではなく、コミュニティサロンにしたのですか？
+                    </h4>
+                    <p class="text-slate-600 text-sm ml-10 leading-relaxed text-justify">
+                        講座やプログラムを受けていただいた皆さんだからこそ、『講師と受講生』ではなく、この先は、仲間として一緒に様々な体験をしながら進んで行きたいという想いからこのコミュニティサロンをスタートすることにしました。<br><br>
+                        また、私の理想は無謀だとほとんどの方に思われていますが、大切なのは、私が生きているうちに叶うかどうかではなく、100年後の子供たちの時代では、これまで以上に望む素敵な世界になっている。でも構わないのです。<br>
+                        ですが、今、一歩を踏み出さなかったら、10年後も100年後も何も動かないし変わらない。だからこそ、これまでは一人で考えていましたが、これからは、皆さんと一緒にそこに向けて進んで行きたいと思いました！
+                    </p>
+                </div>
+
+                <!-- Q8 -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                    <h4 class="font-bold text-base md:text-lg text-slate-800 mb-2 flex items-start">
+                        <span class="bg-gold-500 text-white text-xs px-2 py-1 rounded mr-3 mt-1 shrink-0">Q8</span>
+                        これからは、このコミュニティだけですか？
+                    </h4>
+                    <div class="ml-10 text-slate-600 text-sm leading-relaxed space-y-4">
+                        <p>
+                            このコミュニティは、プロジェクトの中の一つです。皆さんはすでに受けていただいているので、コミュニティサロンからのご案内をさせて頂きました。
+                        </p>
+                        <ol class="list-decimal pl-5 space-y-1 font-bold text-slate-700">
+                            <li>Master Peace Basic <span class="font-normal text-xs">(個人用の講座＆Program)</span></li>
+                            <li>Master Peace Salon <span class="font-normal text-xs">(コミュニティサロン)</span></li>
+                            <li>Master Peace Navigator <span class="font-normal text-xs">(施術、コーチング、カウンセリング等の技術講座)</span></li>
+                        </ol>
+                        <p>の3つの構造になっています。</p>
+                        <p class="pt-4 border-t border-slate-100 mt-4">
+                            コミュニティサロンについて、現在は内容がまだ、講座やグループコンサル、個人セッションとなっていますが、いろんなイベントや、ワークショップなども色々開催できるようにして行きたいと考えています。<br>
+                            また、施術を少し再開していこうとも考えていますので、その場合は、告知をサロンメンバー優先でご案内させていただく予定です（施術代は別途必要となります）。
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Flow & CTA Section -->
     <section class="py-20 px-4 bg-slate-50">
         <div class="max-w-2xl mx-auto text-center fade-in-section">
-            <h3 class="text-2xl font-serif font-bold mb-8 text-midnight-900">参加までの流れ</h3>
+            <h3 class="text-xl md:text-2xl font-serif font-bold mb-8 text-midnight-900">参加までの流れ</h3>
             
             <div class="relative pl-8 text-left space-y-8 mb-12">
-                <!-- Vertical Line -->
                 <div class="absolute left-3 top-2 bottom-2 w-0.5 bg-slate-300"></div>
-
                 <div class="relative">
                     <div class="absolute -left-8 top-0 bg-gold-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">1</div>
-                    <p class="text-lg font-medium text-slate-800">ご希望のプランのボタンから決済手続きをお願いします。</p>
+                    <p class="text-base md:text-lg font-medium text-slate-800">ご希望のプランのボタンから決済手続きをお願いします。</p>
                 </div>
                 <div class="relative">
                     <div class="absolute -left-8 top-0 bg-gold-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold">2</div>
-                    <p class="text-lg font-medium text-slate-800">決済完了後、サロン専用のグループへご案内します。</p>
+                    <p class="text-base md:text-lg font-medium text-slate-800">決済完了後、サロン専用のグループへご案内します。</p>
                 </div>
             </div>
 
@@ -650,16 +800,34 @@
             </div>
 
             <div class="space-y-6">
+                <!-- Premium Annual -->
+                <div class="transform hover:scale-105 transition duration-300 mb-8">
+                     <p class="text-center text-winered-600 font-bold mb-2 animate-pulse text-sm md:text-base">【12月10日(水) 締め切り】</p>
+                     <!-- ↓↓↓ 年払いのPayPalリンクをここに入れてください ↓↓↓ -->
+                     <a href="https://www.paypal.com/ncp/payment/7QHVZLVX8LULS" target="_blank" rel="noopener noreferrer" class="block w-full py-4 bg-gradient-to-r from-winered-600 to-red-500 text-white font-bold text-lg md:text-xl rounded-full shadow-lg border-b-4 border-winered-600 relative overflow-hidden group">
+                        <span class="relative z-10">
+                            <span class="text-xs md:text-sm block font-normal mb-1">2ヶ月分お得！</span>
+                            ▼ プレミアム 1年まとめ払いで参加（165,000円）
+                        </span>
+                        <div class="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition duration-500"></div>
+                    </a>
+                </div>
+
+                <!-- Premium Monthly -->
                 <div id="payment-premium" class="transform hover:scale-105 transition duration-300">
-                    <a href="#" class="block w-full py-4 bg-gradient-to-r from-gold-600 to-gold-400 text-white font-bold text-xl rounded-full shadow-lg border-b-4 border-gold-700 relative overflow-hidden group">
+                    <p class="text-center text-slate-600 font-bold mb-2 mt-6 text-sm md:text-base">【12月20日(土) 締め切り】</p>
+                    <!-- ↓↓↓ プレミアム月払いのPayPalリンクをここに入れてください ↓↓↓ -->
+                    <a href="https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3BA65662TU2683523NEZ3Y5I" target="_blank" rel="noopener noreferrer" class="block w-full py-4 bg-gradient-to-r from-gold-600 to-gold-400 text-white font-bold text-lg md:text-xl rounded-full shadow-lg border-b-4 border-gold-700 relative overflow-hidden group">
                         <span class="relative z-10">▼ プレミアム・プランで参加する（16,500円/月）</span>
                         <div class="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-0 transition duration-500"></div>
                     </a>
-                    <p class="text-gold-600 font-bold mt-2 text-sm animate-pulse">★おすすめ：加速して現実創造したい方へ</p>
                 </div>
 
+                <!-- Community Monthly -->
                 <div id="payment-community">
-                    <a href="#" class="block w-full py-4 bg-slate-600 text-white font-bold text-lg rounded-full shadow-lg border-b-4 border-slate-800 hover:bg-slate-700 transition duration-300">
+                    <p class="text-center text-slate-600 font-bold mb-2 mt-6 text-sm md:text-base">【12月20日(土) 締め切り】</p>
+                    <!-- ↓↓↓ コミュニティ月払いのPayPalリンクをここに入れてください ↓↓↓ -->
+                    <a href="https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-8DX57853741453427NEZ3ZNA" target="_blank" rel="noopener noreferrer" class="block w-full py-4 bg-slate-600 text-white font-bold text-base md:text-lg rounded-full shadow-lg border-b-4 border-slate-800 hover:bg-slate-700 transition duration-300">
                         ▼ コミュニティ・プランで参加する（8,800円/月）
                     </a>
                 </div>
@@ -669,26 +837,25 @@
 
     <!-- Footer Message -->
     <footer class="py-20 px-6 bg-midnight-900 text-white text-center font-serif relative overflow-hidden">
-        <!-- Decor -->
         <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/80"></div>
         <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-lg h-96 bg-gold-500/10 blur-[100px] rounded-full pointer-events-none"></div>
 
         <div class="relative z-10 max-w-3xl mx-auto space-y-8 fade-in-section">
-            <p class="text-lg md:text-xl leading-loose opacity-90">
+            <p class="text-base md:text-xl leading-loose opacity-90">
                 一人で見られる夢には限界があります。<br>
                 でも、仲間となら、その限界を超えていけます。
             </p>
-            <p class="text-lg md:text-xl leading-loose opacity-90">
+            <p class="text-base md:text-xl leading-loose opacity-90">
                 あなたが幸せになることが、世界の幸せになる。<br>
                 この制限のない「遊び場」のような世界で<br>
                 「最高に幸せな自分」をどんどん更新していく。
             </p>
-            <p class="text-xl md:text-2xl font-bold text-gold-200 pt-8">
+            <p class="text-lg md:text-2xl font-bold text-gold-200 pt-8">
                 そんなワクワクする未来を、<br>一緒に創りに行きませんか？
             </p>
             
             <div class="mt-16 pt-16 border-t border-white/10">
-                <p class="text-gold-400 tracking-widest text-lg">「The Master Peace Project」で、<br>ご一緒できるのを楽しみにお待ちしてます。</p>
+                <p class="text-gold-400 tracking-widest text-base md:text-lg">「The Master Peace Project」で、<br>ご一緒できるのを楽しみにお待ちしてます。</p>
             </div>
             
             <div class="mt-20 text-xs text-slate-500 font-sans">
